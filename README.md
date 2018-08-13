@@ -41,5 +41,5 @@ docker push timveil/oo-docker-remote-collector:latest
 docker run \
     -e TAKIPI_SECRET_KEY="S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq4=#87a1" \
     -e TAKIPI_LISTEN_PORT=6060 \
-    timveil/oo-docker-remote-collector
+    timveil/oo-docker-remote-collector:latest
 ```

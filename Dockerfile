@@ -6,7 +6,7 @@ ARG SECRET_KEY=S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq
 ARG COLLECTOR_PORT=6060
 ARG MACHINE_NAME=collector-container
 
-RUN curl -sSL http://get.takipi.com/takipi-t4c-installer | bash /dev/stdin -i \
+RUN curl -sSL http://get.takipi.com | bash /dev/stdin -i \
     --sk=$SECRET_KEY \
     --listen_on_port=$COLLECTOR_PORT \
     --machine_name=$MACHINE_NAME \

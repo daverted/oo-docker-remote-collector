@@ -23,14 +23,14 @@ Although the image contains defaults for all *build* arguments (see `docker buil
 ```bash
 docker build \
     --no-cache \
-    -t timveil/oo-docker-remote-collector:latest \
+    -t timveil/oo-docker-remote-collector:rootless \
     --build-arg COLLECTOR_PORT=6060 .
 ```
 
 #### Publishing the Image
 
 ```bash
-docker push timveil/oo-docker-remote-collector:latest
+docker push timveil/oo-docker-remote-collector:rootless
 ```
 
 #### Running the Image
@@ -39,5 +39,5 @@ docker push timveil/oo-docker-remote-collector:latest
 docker run \
     -e TAKIPI_SECRET_KEY="S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq4=#87a1" \
     -e TAKIPI_LISTEN_PORT=6060 \
-    timveil/oo-docker-remote-collector:latest
+    timveil/oo-docker-remote-collector:rootless
 ```

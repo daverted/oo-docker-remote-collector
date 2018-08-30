@@ -12,7 +12,6 @@ Although the image contains defaults for all *build* arguments (see `docker buil
 
 | build-arg | default value | environment variable | note |
 | --- | --- | --- | --- |
-| `SECRET_KEY` | see Dockerfile | `TAKIPI_SECRET_KEY` | default secret key is invalid and must be replaced |
 | `COLLECTOR_PORT` | `6060` | `TAKIPI_LISTEN_PORT` | port this Collector is listening on |
 | `MACHINE_NAME` | `collector-container` | `TAKIPI_MACHINE_NAME` | human readable name of the container |
 
@@ -25,7 +24,6 @@ Although the image contains defaults for all *build* arguments (see `docker buil
 docker build \
     --no-cache \
     -t timveil/oo-docker-remote-collector:latest \
-    --build-arg SECRET_KEY="S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq4=#87a1" \
     --build-arg COLLECTOR_PORT=6060 .
 ```
 

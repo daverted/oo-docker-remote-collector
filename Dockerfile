@@ -7,6 +7,8 @@ ARG MACHINE_NAME=collector-container
 
 ENV TAKIPI_TMP_DIR=/tmp/takipi
 ENV TAKIPI_COLLECTOR_HOME=/opt/takipi
+ENV GIT_USER=""
+ENV GIT_PASSWORD=""
 
 RUN mkdir -pv $TAKIPI_TMP_DIR \
     && curl -fSL https://s3.amazonaws.com/app-takipi-com/deploy/linux/takipi-latest.tar.gz -o /tmp/takipi-collector.tar.gz \
@@ -21,7 +23,9 @@ RUN mkdir -pv $TAKIPI_TMP_DIR \
     && sed -i "s/\(takipi\.listen\.port=\).*\$/\1${COLLECTOR_PORT}/" $TAKIPI_COLLECTOR_HOME/collector.properties \
     && sed -i "s/\(takipi\.server\.name=\).*\$/\1${MACHINE_NAME}/" $TAKIPI_COLLECTOR_HOME/collector.properties \
     && echo "takipi.jvm.lib.file=${JAVA_HOME}/jre/lib/amd64/server/libjvm.so" >> $TAKIPI_COLLECTOR_HOME/collector.properties \
-    && echo "libraryPath=${TAKIPI_COLLECTOR_HOME}/lib" >> $TAKIPI_COLLECTOR_HOME/collector.properties
+    && echo "libraryPath=${TAKIPI_COLLECTOR_HOME}/lib" >> $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && echo "gitUser=${GIT_USER}/lib" >> $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && echo "gitPassword=${GIT_PASSWORD}/lib" >> $TAKIPI_COLLECTOR_HOME/collector.properties
 
 ADD run.sh /run.sh
 RUN chmod a+x /run.sh

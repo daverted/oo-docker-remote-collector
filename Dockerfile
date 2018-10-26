@@ -23,6 +23,8 @@ RUN mkdir -pv $TAKIPI_TMP_DIR \
     && echo "takipi.jvm.lib.file=${JAVA_HOME}/jre/lib/amd64/server/libjvm.so" >> $TAKIPI_COLLECTOR_HOME/collector.properties \
     && echo "libraryPath=${TAKIPI_COLLECTOR_HOME}/lib" >> $TAKIPI_COLLECTOR_HOME/collector.properties
 
+EXPOSE 6060
+
 ADD run.sh /run.sh
 RUN chmod a+x /run.sh
 

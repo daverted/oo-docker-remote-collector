@@ -21,10 +21,7 @@ Although the image contains defaults for all *build* arguments (see `docker buil
 #### Building the Image
 
 ```bash
-docker build \
-    --no-cache \
-    -t timveil/oo-docker-remote-collector:rootless \
-    --build-arg COLLECTOR_PORT=6060 .
+docker build --no-cache -t timveil/oo-docker-remote-collector:rootless --build-arg COLLECTOR_PORT=6060 .
 ```
 
 #### Publishing the Image

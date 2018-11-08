@@ -2,15 +2,28 @@ FROM timveil/oo-docker-base:alpine-musl
 
 LABEL maintainer="tjveil@gmail.com"
 
-ARG SECRET_KEY=S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq4=#87a1
 ARG COLLECTOR_PORT=6060
 ARG MACHINE_NAME=collector-container
+ARG TAKIPI_TMP_DIR=/tmp/takipi
+ARG TAKIPI_VERSION=0.2252
 
-RUN curl -sSL http://get.takipi.com/takipi-t4c-installer | bash /dev/stdin -i \
-    --sk=$SECRET_KEY \
-    --listen_on_port=$COLLECTOR_PORT \
-    --machine_name=$MACHINE_NAME \
-    && rm -rf /opt/takipi/installation.key
+ENV TAKIPI_COLLECTOR_HOME=/opt/takipi
+
+RUN mkdir -pv $TAKIPI_TMP_DIR \
+    && curl -fSL https://s3.amazonaws.com/sam.sparktale/samv2/snapshots/native/native.${TAKIPI_VERSION}/takipi-alpine-native.${TAKIPI_VERSION}.tar.gz -o /tmp/takipi-collector.tar.gz \
+    && tar -xvf /tmp/takipi-collector.tar.gz -C $TAKIPI_TMP_DIR --strip-components=1 \
+    && mv -v $TAKIPI_TMP_DIR /opt \
+    && rm -rfv /tmp/takipi-collector.tar.gz \
+    && rm -rfv $TAKIPI_COLLECTOR_HOME/agent.properties.example \
+    && mv $TAKIPI_COLLECTOR_HOME/collector.properties.example $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "/^#/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "/^libraryPath/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "/^takipi.storage.test.url/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "/^$/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "s/\(takipi\.listen\.port=\).*\$/\1${COLLECTOR_PORT}/" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "s/\(takipi\.server\.name=\).*\$/\1${MACHINE_NAME}/" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && echo "takipi.jvm.lib.file=${JAVA_HOME}/jre/lib/amd64/server/libjvm.so" >> $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && echo "libraryPath=${TAKIPI_COLLECTOR_HOME}/lib" >> $TAKIPI_COLLECTOR_HOME/collector.properties
 
 EXPOSE 6060
 

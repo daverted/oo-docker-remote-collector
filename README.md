@@ -22,24 +22,17 @@ Although the image contains defaults for all *build* arguments (see `docker buil
 #### Building the Image
 
 ```bash
-docker build \
-    --no-cache \
-    -t timveil/oo-docker-remote-collector:latest \
-    --build-arg SECRET_KEY="S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq4=#87a1" \
-    --build-arg COLLECTOR_PORT=6060 .
+docker build --no-cache -t timveil/oo-docker-remote-collector:alpine-musl .
 ```
 
 #### Publishing the Image
 
 ```bash
-docker push timveil/oo-docker-remote-collector:latest
+docker push timveil/oo-docker-remote-collector:alpine-musl
 ```
 
 #### Running the Image
 
 ```bash
-docker run \
-    -e TAKIPI_SECRET_KEY="S3875#YAFwDEGg5oSIU+TM#G0G7VATLOqJIKtAMy1MObfFINaQmVT5hGYLQ+cpPuq4=#87a1" \
-    -e TAKIPI_LISTEN_PORT=6060 \
-    timveil/oo-docker-remote-collector:latest
+docker run timveil/oo-docker-remote-collector:alpine-musl
 ```

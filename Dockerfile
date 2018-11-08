@@ -5,12 +5,11 @@ LABEL maintainer="tjveil@gmail.com"
 ARG COLLECTOR_PORT=6060
 ARG MACHINE_NAME=collector-container
 ARG TAKIPI_TMP_DIR=/tmp/takipi
-ARG TAKIPI_VERSION=0.2252
 
 ENV TAKIPI_COLLECTOR_HOME=/opt/takipi
 
 RUN mkdir -pv $TAKIPI_TMP_DIR \
-    && curl -fSL https://s3.amazonaws.com/sam.sparktale/samv2/snapshots/native/native.${TAKIPI_VERSION}/takipi-alpine-native.${TAKIPI_VERSION}.tar.gz -o /tmp/takipi-collector.tar.gz \
+    && curl -fSL https://s3.amazonaws.com/app-takipi-com/deploy/linux/takipi-latest.tar.gz -o /tmp/takipi-collector.tar.gz \
     && tar -xvf /tmp/takipi-collector.tar.gz -C $TAKIPI_TMP_DIR --strip-components=1 \
     && mv -v $TAKIPI_TMP_DIR /opt \
     && rm -rfv /tmp/takipi-collector.tar.gz \

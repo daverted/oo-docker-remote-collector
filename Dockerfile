@@ -4,8 +4,8 @@ LABEL maintainer="tjveil@gmail.com"
 
 ARG COLLECTOR_PORT=6060
 ARG MACHINE_NAME=collector-container
+ARG TAKIPI_TMP_DIR=/tmp/takipi
 
-ENV TAKIPI_TMP_DIR=/tmp/takipi
 ENV TAKIPI_COLLECTOR_HOME=/opt/takipi
 
 RUN mkdir -pv $TAKIPI_TMP_DIR \
@@ -17,6 +17,7 @@ RUN mkdir -pv $TAKIPI_TMP_DIR \
     && mv $TAKIPI_COLLECTOR_HOME/collector.properties.example $TAKIPI_COLLECTOR_HOME/collector.properties \
     && sed -i "/^#/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
     && sed -i "/^libraryPath/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
+    && sed -i "/^takipi.storage.test.url/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
     && sed -i "/^$/d" $TAKIPI_COLLECTOR_HOME/collector.properties \
     && sed -i "s/\(takipi\.listen\.port=\).*\$/\1${COLLECTOR_PORT}/" $TAKIPI_COLLECTOR_HOME/collector.properties \
     && sed -i "s/\(takipi\.server\.name=\).*\$/\1${MACHINE_NAME}/" $TAKIPI_COLLECTOR_HOME/collector.properties \
